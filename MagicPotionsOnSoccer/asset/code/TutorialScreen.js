@@ -4,7 +4,7 @@
 	}
 	var p = TutorialScreen.prototype = new createjs.Container(); // inherit from Container
 	
-	p.name = "gameplayscreen";
+	p.name = "tutorialscreen";
 	p.background;
 		
 	// Usando tick da tela.
@@ -32,9 +32,9 @@
 		{
 			p.tickCount++;
 			
-			if (p.tickCount >= 180)
+			if (p.tickCount >= 600)
 			{
-				//p.gamMan.loadScreen("titlescreen");
+				p.gamMan.loadScreen("titlescreen");
 			}			
 		}
 	}
