@@ -25,16 +25,21 @@
 	
 	p.TIMETODIE = 10; // 60 segundos
 	p.elapsedTime = 0;
+	p.randomItemTime = 0;
 	
 	p.isGameOver = false;
 	
+	// HUD.
 	p.hudScore;
 	p.hudPlacar;
 	p.hudTime;
 	
+	// Itens.
 	p.gameItens = [];
 	p.itensPosX = [210, 388, 580];
 	p.itensPosY = [250, 370, 480];
+	p.itemChavePos = [388, 640];
+	p.itemChaveBitmap;
 	p.itemChave;
 	
 	// Métodos.
@@ -42,6 +47,8 @@
 	p.cItem;
 	p.rigthClick;
 	p.wrongClick;
+	p.itemClick;
+	p.randomItemChave;
 		
 	p.Container_initialize = p.initialize;
 	p.initialize = function(gameplayManager){
@@ -52,6 +59,9 @@
 		p.hudScore = this.cText(this.score, 650, 80);
 		p.hudPlacar = this.cText(this.placarJog + "x" + this.placarIA, 90, 90);
 		p.hudTime = this.cText(this.TIMETODIE - this.elapsedTime, 420, 80);
+		
+		// Escolhendo item chave.
+		p.randomItemChave();
 		
 		var index = 0;
 		var indAux = 0;
@@ -65,35 +75,12 @@
 			}
 			p.gameItens[p.gameItens.length] = this.cItem(index, this.itensPosX[indAux], this.itensPosY[indMod])
 		}
-		
-		// vish.
-		var item1 = this.cItem(0, 210, 250);
-		
-		/*
-		var isGameOver = false;
-		var msgFim = false;	
-		
-		var ele0 = new createjs.Bitmap("asset/images/ele0.jpg");
-		ele0.x = 210;
-		ele0.y = 250;		
-		ele0.addEventListener("click", onRightClicked);
-		//stage.addChild(ele0);		
-		
-		var ele1 = new createjs.Bitmap("asset/images/ele1.jpg");
-		ele1.x = 388;
-		ele1.y = 250;		
-		ele1.addEventListener("click", onWrongClicked);
-		//stage.addChild(ele1);	
-		
-		//TODO
-		x = Math.floor((Math.random() * 660) + 100);
-		y = Math.floor((Math.random() * 100) + 1);
-		
-		*/
+				
 		this.addChild(this.background);
 		this.addChild(this.hudScore);
 		this.addChild(this.hudPlacar);
 		this.addChild(this.hudTime);
+		this.addChild(p.itemChaveBitmap);
 		
 		index = 0;
 		for (index; index < 9; index++)
@@ -112,7 +99,14 @@
 			if (p.tickCount >= 60)
 			{
 				p.elapsedTime++;
+				p.randomItemTime++;
 				p.tickCount = 0;
+			}
+			
+			if (p.randomItemTime >= 2)
+			{
+				p.randomItemTime = 0;
+				p.randomItemChave();				
 			}
 			
 			var	time = p.TIMETODIE - p.elapsedTime;
@@ -200,16 +194,62 @@
 		itemBitmap.x = x;
 		itemBitmap.y = y;
 		itemBitmap.name = nameItem;
+		itemBitmap.addEventListener("click", p.itemClick);
 		
 		return itemBitmap;
 	}
 	
-	p.rigthClick = function(event)
+	p.itemClick = function(event)
 	{
+		// alert();
+		
+		/*
+		if (this.name == p.itemChave)
+		{
+			p.rigthClick();
+		}
+		else
+		{
+			p.wrongClick();
+		}
+		*/
 	}
 	
-	p.wrongClick = function()
+	p.rigthClick = function(event)
 	{
+		if (p.isGameOver == false)
+		{
+			p.acertos++;
+			if (p.acertos >= 2)
+			{
+				p.placarJog++;
+				p.score += 15;
+				p.acertos = 0;
+			}
+		}
+	}
+	
+	p.wrongClick = function(event)
+	{
+		if (p.isGameOver == false)
+		{
+			p.erros++;
+			if (p.erros >= 2)
+			{
+				p.placarIA++;
+				p.score -= 10;
+				p.erros = 0;
+			}
+		}
+	}
+	
+	p.randomItemChave = function()
+	{
+		p.itemChave = Math.floor((Math.random() * 9));
+		p.removeChild(p.itemChaveBitmap);
+		
+		p.itemChaveBitmap = this.cItem(p.itemChave, p.itemChavePos[0], p.itemChavePos[1]);
+		p.addChild(p.itemChaveBitmap)
 	}
 	
 	window.GameplayScreen = GameplayScreen;
