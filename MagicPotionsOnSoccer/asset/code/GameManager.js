@@ -1,6 +1,5 @@
 (function(){	
-	var test;
-	
+
 	var GameManager = function(stage){
 		initialize(stage);
 	}
@@ -8,30 +7,47 @@
 	p.gamStg;
 	p.isLoaded;
 	p.screens = [];
-	p.iLoaded = 0;
+	p.iLoaded = 0;	
 
 	this.initialize = function(stage)
 	{		
 		p.gamStg = stage;
 	}
 		
-	GameManager.prototype.addScreen = function(screen)
+	p.addScreen = function(screen)
 	{
-		this.screens[this.screens.length] = screen;
+		p.screens[this.screens.length] = screen;
 	}
 	
-	GameManager.prototype.loadScreen = function(screenName)
+	p.loadScreen = function(screenName)
 	{
-		var index = 0;
-
-		for (index; index < this.screens.length; index++)
+		
+		if (p.isLoaded == true)
 		{
-			if (this.screens[index].name === screenName)
+			//alert("descarregando" + p.screens[p.iLoaded].name)
+			p.screens[p.iLoaded].tearDown();
+			p.gamStg.removeChild(p.screens[p.iLoaded]);
+		}
+		
+		var index = 0;
+		
+		for (index; index < p.screens.length; index++)
+		{	
+			//alert("carregando " + p.screens[index].name)
+			if (p.screens[index].name === screenName)
 			{
-				this.gamStg.addChild(this.screens[index]);
-				this.iLoaded = index;
+				p.screens[index].setup();
+				p.tick = p.screens[index].tick;
+				p.iLoaded = index;
+				p.isLoaded = true;
+				
+				p.gamStg.addChild(p.screens[index]);				
 			}
-		}	
+		}		
+	}
+	
+	p.tick = function(event)
+	{
 	}
 	
 	window.GameManager = GameManager;

@@ -13,10 +13,12 @@
 <!-- <script src="lib/movieclip-0.4.1.min.js"></script> -->
 
 <!-- Game script below -->
+<script src="asset/code/GameManager.js"></script>
 <script src="asset/code/TitleScreen.js"></script>
 <script src="asset/code/GameplayScreen.js"></script>
-<script src="asset/code/Button.js"></script>
-<script src="asset/code/GameManager.js"></script>
+<script src="asset/code/CreditosScreen.js"></script>
+<script src="asset/code/TutorialScreen.js"></script>
+
 <script type="text/javascript" src="asset/code/Jogador.js"></script>
 
 <script>
@@ -28,34 +30,21 @@
 		createjs.Ticker.setFPS(60);
 		createjs.Ticker.addEventListener("tick", tick);	
 		
-		// criando gerenciador do jogo.
+		// Criando gerenciador do jogo.
 		var gamMan = new GameManager(stage);
 		
-		//Instanciando telas.				
+		// Instanciando telas.				
 		gamMan.addScreen(new TitleScreen(gamMan));
+		gamMan.addScreen(new GameplayScreen(gamMan));		
+		gamMan.addScreen(new TutorialScreen(gamMan));
+		gamMan.addScreen(new CreditosScreen(gamMan));
 		
-		// Continuar;
+		// Carregando tela inicial.	
+		gamMan.loadScreen("titlescreen");		
 		
-		gamMan.loadScreen("titlescreen");
 		
 		var isGameOver = false;
-		var msgFim = false;		
-		
-		
-		var placarJog = 0;
-		var placarIA = 0;	
-		var score = 0;
-		
-		var erros = 0;
-		var acertos = 0;	
-				
-		
-		
-		//var bt = new Button("test");
-		//stage.addChild(bt);
-		
-		var bg = new createjs.Bitmap("asset/images/background.png");
-		//stage.addChild(bg);
+		var msgFim = false;	
 		
 		var TIMETODIE = 60; 
 		
@@ -64,8 +53,7 @@
 		hudFimDeJogo.maxWidth = 1000;
 		hudFimDeJogo.textAlign = "center";
 		hudFimDeJogo.x = stage.canvas.width/2;
-		hudFimDeJogo.y = stage.canvas.height/2;
-		
+		hudFimDeJogo.y = stage.canvas.height/2;		
 		
 		var hudScore;
 		hudScore = new createjs.Text(score, "bold 24px Arial", "#000000");
@@ -156,14 +144,9 @@
 		var tickcount = 0;		
 		var changetimecount = 0;
 		
-		//var button1 = new Button("aha");
-		
-		//stage.addChild(button1);
-		//stage.removeChild(button1);
-
-		//messageField.text = "Legal";
-		
 		function tick(event) {
+			gamMan.tick();
+			/*
 			tickcount++;
 			changetimecount++;
 			if (isGameOver == false)
@@ -193,8 +176,8 @@
 			}
 			
 			hudScore.text = score;
-			placarHud.text = ""+placarJog+"x"+placarIA;
-			
+			//placarHud.text = ""+placarJog+"x"+placarIA;
+			*/
 			stage.update(); // important!!
 		}
 		
@@ -234,7 +217,7 @@
 		function changeLocals()
 		{
 		
-		}		
+		}	
 	}
 </script>
 
