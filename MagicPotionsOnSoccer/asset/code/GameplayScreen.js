@@ -74,6 +74,7 @@
 				indAux++;
 			}
 			p.gameItens[p.gameItens.length] = this.cItem(index, this.itensPosX[indAux], this.itensPosY[indMod])
+			p.gameItens[p.gameItens.length - 1].addEventListener("click", p.itemClick);
 		}
 				
 		this.addChild(this.background);
@@ -194,17 +195,13 @@
 		itemBitmap.x = x;
 		itemBitmap.y = y;
 		itemBitmap.name = nameItem;
-		itemBitmap.addEventListener("click", p.itemClick);
 		
 		return itemBitmap;
 	}
 	
 	p.itemClick = function(event)
 	{
-		// alert();
-		
-		/*
-		if (this.name == p.itemChave)
+		if (event.target.name == p.itemChave)
 		{
 			p.rigthClick();
 		}
@@ -212,7 +209,6 @@
 		{
 			p.wrongClick();
 		}
-		*/
 	}
 	
 	p.rigthClick = function(event)
@@ -249,6 +245,7 @@
 		p.removeChild(p.itemChaveBitmap);
 		
 		p.itemChaveBitmap = this.cItem(p.itemChave, p.itemChavePos[0], p.itemChavePos[1]);
+		//p.itemChaveBitmap.removeListener(p.itemClick);
 		p.addChild(p.itemChaveBitmap)
 	}
 	
