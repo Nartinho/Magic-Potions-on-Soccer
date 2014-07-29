@@ -23,7 +23,7 @@
 	p.erros = 0;
 	p.acertos = 0;
 	
-	p.TIMETODIE = 10; // 60 segundos
+	p.TIMETODIE = 30; // 60 segundos
 	p.elapsedTime = 0;
 	p.randomItemTime = 0;
 	
