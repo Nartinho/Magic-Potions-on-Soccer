@@ -168,6 +168,7 @@
 		p.tickCount = 0;
 		
 		p.isActived = true;
+		p.isGameOver = false;
 	}
 	
 	p.tearDown = function()
