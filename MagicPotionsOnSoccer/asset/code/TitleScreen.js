@@ -22,7 +22,7 @@
 		
 		// Gerenciador de jogo.
 		p.gamMan = gameplayManager;
-		alert(p.gamMan);
+		//alert(p.gamMan);
 		
 		//Fundo da tela
 		this.background = new createjs.Bitmap("asset/images/TitleScreen.png");

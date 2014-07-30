@@ -40,50 +40,12 @@
 		gamMan.addScreen(new CreditosScreen(gamMan));
 		
 		// Carregando tela inicial.	
-		gamMan.loadScreen("gameplayscreen");		
+		gamMan.loadScreen("titlescreen");
 				
 		function tick(event) {
 			gamMan.tick();
 			stage.update(); // important!!
 		}
-		
-		function onRightClicked(event)
-		{
-			if (isGameOver == false)
-			{
-				score+= 10;
-				acertos++;
-				if (acertos >= 2)
-				{
-					placarJog++;
-					acertos = 0;
-				}
-				
-				changeLocals();
-			}
-		}
-		
-		function onWrongClicked(event)
-		{
-			if (isGameOver == false)
-			{
-				score-=5;
-				erros++;
-				
-				if (erros >= 2)
-				{
-					placarIA++;
-					erros = 0;
-				}
-				
-				changeLocals();
-			}
-		}
-		
-		function changeLocals()
-		{
-		
-		}	
 	}
 </script>
 
